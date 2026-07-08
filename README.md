@@ -1,6 +1,30 @@
 # Padel Trainer — Quick Start & Complete Usage Guide
 
-This repository provides a complete toolchain to detect a padel ball in video, track its trajectory, detect contact events, manually label candidate contacts, train a lightweight contact scorer, and deploy an optimized edge pipeline. The guide below is command-by-command so another developer or researcher can reproduce the workflows.
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)]() [![python](https://img.shields.io/badge/python-3.10+-blue)]() [![status](https://img.shields.io/badge/status-experimental-orange)]()
+
+One-line description
+--------------------
+
+Padel Trainer detects padel ball contacts in video, provides tools for manual labeling, trains a lightweight windowed contact scorer, and supports edge deployment (Raspberry Pi + Hailo-8).
+
+Why this repo
+--------------
+
+- Reproducible pipeline: detection → tracking → candidate extraction → manual labeling → scorer training → scoring.
+- Edge-ready: ONNX export and Hailo-8 compilation helpers included.
+- Focused on researcher productivity: simple CLIs and a small Tkinter labeler for fast human-in-the-loop labeling.
+
+Table of Contents
+-----------------
+
+- Quick start (setup & first run)
+- Labeling (manual GUI)
+- Train & score (scorer scripts)
+- Edge & Hailo (export, compile, Pi workflow)
+- Troubleshooting & tips
+- Developer notes and layout
+
+**Assumptions:** Windows PowerShell examples shown; equivalent POSIX commands (bash) are included where helpful. Replace paths with your workspace path.
 
 **Assumptions:** Windows PowerShell examples shown; equivalent POSIX commands (bash) are included where helpful. Replace paths with your workspace path.
 
@@ -178,6 +202,72 @@ python convert_to_hailo.py --model training/runs/detect/train/weights/best.pt --
 hailomz compile models/onnx/best_ball_nano_hailo.onnx --output best_ball_nano.hef
 scp best_ball_nano.hef pi@raspberrypi.local:~/padel_trainer/models/onnx/
 ```
+
+### Host → Pi: Concrete Hailo workflow (recommended)
+
+Follow these step-by-step commands to export, compile and run a Hailo-compatible model on a Raspberry Pi 5 with Hailo-8.
+
+1) Export ONNX and apply Hailo conversion helper on x86_64 host:
+
+```bash
+# Export ONNX (Ultralytics)
+yolo export model=runs/detect/train/weights/best.pt format=onnx opset=11
+
+# Convert to Hailo-compatible ONNX using helper script
+python convert_to_hailo.py --model runs/detect/train/weights/best.pt --output models/onnx/best_ball_nano_hailo.onnx
+```
+
+2) Compile ONNX → HEF on x86_64 (native or Docker):
+
+```bash
+# Using Hailo Docker image (recommended when SDK is not installed locally)
+docker pull hailo/hailo-sw-suite:latest
+docker run --rm -v $(pwd):/workspace hailo/hailo-sw-suite:latest \
+	hailo parser onnx /workspace/models/onnx/best_ball_nano_hailo.onnx
+docker run --rm -v $(pwd):/workspace hailo/hailo-sw-suite:latest \
+	hailo compiler /workspace/best_ball_nano_hailo.har --hw-arch hailo8 --output /workspace/best_ball_nano_hailo.hef
+```
+
+3) Transfer HEF and repo to Pi:
+
+```bash
+scp best_ball_nano_hailo.hef pi@raspberrypi.local:~/padel_trainer/models/onnx/
+scp -r . pi@raspberrypi.local:~/padel_trainer/   # optional: sync repo to Pi
+```
+
+4) On Pi: set up environment and verify Hailo runtime
+
+```bash
+ssh pi@raspberrypi.local
+cd ~/padel_trainer
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+# Install Hailo runtime (may vary by image)
+sudo apt update && sudo apt install -y hailo-all
+# Confirm device is visible
+hailortcli scan
+```
+
+5) Run the HEF model (quick test / benchmark):
+
+```bash
+hailo run ~/padel_trainer/models/onnx/best_ball_nano_hailo.hef --input <optional_raw_input>
+hailortcli benchmark ~/padel_trainer/models/onnx/best_ball_nano_hailo.hef
+```
+
+6) Run the project's edge inference using the HEF file (if `edge_inference.py` supports the hailo backend):
+
+```bash
+python src/edge/edge_inference.py input_videos/Padel_video_8.mp4 --backend hailo --heffile ~/padel_trainer/models/onnx/best_ball_nano_hailo.hef --save-video
+```
+
+Notes:
+- Hailo compilation requires x86_64 host; use the Hailo Docker image to avoid native SDK installation.
+- If `hailortcli scan` does not detect the device, verify drivers and board connections.
+- If `edge_inference.py` lacks `--backend hailo`, use `hailo run` or follow `src/edge/README.md` for the Pi wrapper.
+
 
 ## 9) Annotated video export and collision marker overlay
 
