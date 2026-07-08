@@ -1,0 +1,21 @@
+# ===========================================
+#  Padel Trainer – Python Dependencies
+# ===========================================
+# Install:  pip install -r requirements.txt
+#
+# Note: For CUDA GPU acceleration, install PyTorch separately:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+
+# Core
+ultralytics>=8.0.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Kalman filter
+filterpy>=1.4.5
+
+# Evaluation / plotting
+scipy>=1.10.0
+matplotlib>=3.7.0

@@ -1,0 +1,10 @@
+# Padel Ball Detection – Fine-tuning Dataset
+# YOLO format
+
+path: C:\Daniel\GUC\Bachelor\Thesis Progress\Software\padel_trainer\training\dataset
+train: images/train
+val: images/val
+
+nc: 1
+names:
+  0: ball

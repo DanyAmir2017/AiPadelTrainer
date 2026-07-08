@@ -1,0 +1,183 @@
+\chapter{Background}\label{chap:background}
+This chapter introduces the core technologies and concepts that support the development of the padel analysis system. The system integrates real-time object detection, motion tracking, and machine learning classification to enable automated sports analytics. The main tools explored include YOLOv8 for object detection, OpenCV with optical flow for ball tracking, and a Random Forest classifier for bounce classification.
+
+\section{Concepts Overview} \label{sec:s1}
+
+\subsection{Artificial Intelligence (AI)}
+
+Artificial Intelligence (AI) is a branch of computer science concerned with the development of systems capable of performing tasks that normally require human intelligence. These tasks include learning, reasoning, decision-making, problem solving, perception, and language understanding. AI systems aim to simulate cognitive abilities by analyzing data, recognizing patterns, and making predictions or decisions with minimal human intervention.
+
+The concept of Artificial Intelligence dates back to the mid-twentieth century, when researchers began exploring whether machines could imitate human thinking and behavior. Over the years, advancements in computational power, data availability, and algorithm design have significantly accelerated the growth of AI technologies. Today, AI plays a major role in many industries and research fields due to its ability to automate complex processes and improve efficiency.
+
+Artificial Intelligence can generally be categorized into two primary types: Narrow AI and General AI. Narrow AI, also known as Weak AI, refers to systems designed to perform specific tasks efficiently, such as image recognition, speech processing, recommendation systems, and autonomous navigation. Most modern AI applications belong to this category. In contrast, General AI represents a theoretical form of intelligence capable of understanding and performing any intellectual task that a human can accomplish. Although General AI remains an active area of research, current practical applications are predominantly based on Narrow AI systems.
+
+AI technologies are widely used across various domains. In healthcare, AI assists in medical image analysis, disease diagnosis, and patient monitoring systems. In robotics, intelligent systems enable robots to navigate environments, interact with objects, and perform automated industrial tasks. Autonomous systems such as self-driving vehicles rely heavily on AI algorithms for perception, localization, and decision-making. Additionally, AI has become increasingly important in sports analytics, where computer vision and machine learning techniques are utilized to analyze player performance, track object movement, and generate strategic insights from video data.
+
+One of the most important subfields of Artificial Intelligence is computer vision, which focuses on enabling machines to interpret and understand visual information from images and videos. Computer vision techniques are extensively used in modern sports analysis systems for tasks such as object detection, player tracking, and event recognition. In the proposed Padel Trainer system, AI-based computer vision methods are utilized to detect and track the padel ball, analyze its trajectory, and identify contact events during gameplay. Therefore, Artificial Intelligence forms the foundational technological domain upon which the proposed system is built.
+
+\subsection{Machine Learning}
+
+Machine Learning (ML) is a subset of Artificial Intelligence that focuses on enabling computer systems to learn patterns and make decisions from data without being explicitly programmed for every task. Instead of relying on predefined rules, machine learning algorithms improve their performance by analyzing large amounts of data and identifying relationships within it. This ability allows ML systems to adapt to new inputs and generate predictions or classifications automatically.
+
+Machine learning systems generally operate in two main stages: training and inference. During the training stage, the algorithm learns from a dataset by adjusting its internal parameters to minimize prediction errors. The dataset typically contains examples and corresponding labels or outputs. Once training is completed, the model enters the inference stage, where it uses the learned knowledge to make predictions on unseen data. Inference represents the practical deployment phase of the trained model in real-world applications.
+
+Machine learning approaches are commonly categorized into supervised learning, unsupervised learning, and reinforcement learning. Supervised learning uses labeled datasets in which both input data and expected outputs are provided. The algorithm learns the mapping between inputs and outputs in order to make future predictions. Examples include image classification, object detection, and regression tasks. Unsupervised learning, on the other hand, works with unlabeled data and attempts to discover hidden patterns or structures such as clustering or dimensionality reduction. Reinforcement learning is based on an agent interacting with an environment and learning optimal actions through rewards and penalties.
+
+Datasets play a critical role in machine learning systems, as model performance heavily depends on the quality, diversity, and quantity of training data. During model training, data is often divided into training, validation, and testing subsets to evaluate the model's ability to generalize to unseen samples. Various optimization algorithms are used to minimize errors and improve accuracy during the learning process.
+
+Machine learning has become essential in numerous fields including finance, healthcare, cybersecurity, robotics, and computer vision. In computer vision applications, supervised learning techniques are widely used for tasks such as object detection and tracking. Modern object detection models are trained using labeled datasets containing annotated objects within images or video frames.
+
+In the proposed Padel Trainer system, machine learning techniques are utilized through supervised deep learning models trained to detect the padel ball, players, and court regions from video footage. These models learn spatial and visual patterns from labeled sports datasets, enabling automated analysis and tracking during gameplay.
+
+\subsection{Deep Learning}
+
+Deep Learning (DL) is a specialized branch of machine learning that utilizes artificial neural networks with multiple layers to learn complex patterns and representations from data. Unlike traditional machine learning approaches that often rely on handcrafted feature extraction, deep learning models automatically learn relevant features directly from raw input data through hierarchical processing layers.
+
+Deep learning is inspired by the structure and functionality of the human brain, where interconnected neurons process and transmit information. In artificial neural networks, each neuron receives input values, performs mathematical operations, and produces an output that is passed to subsequent layers. By stacking multiple hidden layers, deep learning models become capable of learning increasingly abstract representations of data. Early layers typically detect simple patterns such as edges and textures, while deeper layers identify higher-level structures and semantic information.
+
+One of the key advantages of deep learning is its effectiveness in processing unstructured data such as images, videos, audio, and text. In computer vision applications, deep learning models can automatically extract spatial and visual features directly from images without requiring manual feature engineering. This capability has significantly improved performance in tasks such as object detection, image classification, semantic segmentation, and visual tracking.
+
+Traditional computer vision methods often relied on handcrafted features such as edges, corners, textures, or color histograms designed manually by researchers. While these methods achieved moderate success, they were limited in their ability to generalize to complex real-world environments. Deep learning replaced many of these handcrafted approaches because neural networks can automatically learn robust and adaptive features directly from large datasets. As computational power and graphics processing units (GPUs) became more advanced, deep learning models achieved substantial improvements in both accuracy and scalability.
+
+Convolutional Neural Networks (CNNs) are among the most widely used deep learning architectures for image and video analysis. CNNs utilize convolutional layers to detect spatial patterns within images and are particularly effective for object detection tasks. Modern real-time object detection systems, including the YOLO family of models, are based on deep learning architectures optimized for speed and accuracy.
+
+In the proposed Padel Trainer system, deep learning techniques form the core of the detection pipeline. YOLOv8, a deep learning-based object detection model, is utilized to detect the padel ball, players, and court features from video frames. The ability of deep learning models to automatically extract meaningful visual features enables accurate sports analysis and real-time tracking performance.
+
+\subsection{Neural Networks}
+
+Artificial Neural Networks (ANNs) are computational models inspired by the biological neural structure of the human brain. Neural networks consist of interconnected processing units called neurons that work together to analyze data, recognize patterns, and generate predictions. They form the fundamental architecture behind modern deep learning systems and are widely used in computer vision, natural language processing, and intelligent decision-making applications.
+
+A neural network is generally composed of three main types of layers: the input layer, hidden layers, and output layer. The input layer receives raw data such as image pixels or numerical values and forwards them to the network. Hidden layers perform mathematical transformations and feature extraction through interconnected neurons. The output layer produces the final prediction or classification result depending on the application.
+
+Each connection between neurons is associated with a numerical parameter known as a weight, which determines the importance of the transmitted information. Additionally, each neuron contains a bias term that helps adjust the activation threshold. The output of a neuron is calculated by combining weighted inputs with the bias value and applying an activation function. A simplified neuron equation can be represented as follows:
+
+\[
+y = f\left(\sum_{i=1}^{n} w_i x_i + b\right)
+\]
+
+where \(x_i\) represents the input values, \(w_i\) represents the corresponding weights, \(b\) is the bias term, and \(f\) denotes the activation function.
+
+Activation functions introduce non-linearity into neural networks, enabling them to model complex relationships within data. Common activation functions include the Sigmoid function and the Rectified Linear Unit (ReLU). The Sigmoid function maps values into a range between 0 and 1, making it useful for probability-based outputs. ReLU is widely used in deep learning architectures due to its computational efficiency and ability to reduce vanishing gradient problems during training.
+
+Neural networks learn through a process called forward propagation and backpropagation. During forward propagation, input data passes through the network layer by layer until a prediction is generated. The predicted output is then compared with the expected output using a loss function that measures prediction error. During backpropagation, the network adjusts its weights and biases by propagating the error backward through the layers using optimization algorithms such as gradient descent. Repeated iterations of this process allow the model to gradually improve its performance.
+
+As neural networks become deeper by adding more hidden layers, they gain the ability to learn highly complex representations from data. These deep neural networks have significantly advanced the field of computer vision and enabled the development of modern object detection systems.
+
+In the proposed Padel Trainer system, neural network architectures are utilized through deep learning-based object detection models to identify and track the padel ball and players in video frames. The capability of neural networks to learn visual patterns and spatial relationships is essential for achieving accurate and real-time sports analysis.
+
+\subsection{Computer Vision}
+
+Computer Vision (CV) is a branch of Artificial Intelligence that enables computers to analyze and understand visual information from images and videos. Unlike traditional image processing, which focuses mainly on enhancing or modifying images, computer vision aims to extract meaningful information and interpret the contents of a scene.
+
+Computer vision systems are widely used in applications such as facial recognition, autonomous driving, medical imaging, surveillance, and sports analytics. In sports, computer vision helps in player tracking, ball tracking, motion analysis, and automated event detection.
+
+Video analysis is an important area of computer vision because it allows systems to understand movement and temporal changes between frames. Real-time computer vision systems are especially important in applications requiring immediate feedback, such as robotics and sports monitoring.
+
+In this thesis, computer vision techniques are used for ball tracking, player detection, court detection, and contact event identification in padel videos. These tasks form the foundation of the proposed automated sports analysis system.
+
+\subsection{Object Detection}
+
+Object detection is a computer vision task that identifies and localizes objects within an image or video frame. Unlike image classification, which only determines the object category, object detection also predicts the object location using bounding boxes and confidence scores.
+
+Traditional object detection methods relied on handcrafted features such as Haar Cascades and Histogram of Oriented Gradients (HOG) combined with Support Vector Machines (SVMs). Although effective for simple tasks, these methods struggled with complex scenes and fast-moving objects.
+
+Modern object detection systems are mainly based on Convolutional Neural Networks (CNNs). These approaches are generally divided into two categories: two-stage detectors and one-stage detectors. Two-stage detectors, such as the R-CNN family, first generate region proposals and then classify them. While accurate, they are computationally expensive.
+
+One-stage detectors, such as the YOLO family, perform localization and classification in a single network pass, enabling real-time performance. Because sports analytics systems require fast processing and low latency, one-stage detectors are more suitable for applications involving fast-moving objects such as padel balls.
+
+In this thesis, object detection is used to detect the ball, players, and court boundaries within video frames as part of the automated tracking pipeline.
+
+\subsection{YOLO}
+
+YOLO, which stands for ``You Only Look Once,'' is a family of real-time object detection algorithms designed to perform object localization and classification simultaneously in a single neural network pass. Unlike traditional two-stage detectors, YOLO processes the entire image only once, making it significantly faster.
+
+The YOLO algorithm divides the image into a grid where each cell predicts bounding boxes, object confidence scores, and class probabilities. This unified approach enables real-time object detection while maintaining good accuracy.
+
+Several versions of YOLO have been developed over time. YOLOv1 introduced the single-stage detection concept, while YOLOv3 improved small-object detection and multi-scale feature extraction. YOLOv5 focused on deployment efficiency and training improvements, whereas YOLOv8 introduced further architectural enhancements and anchor-free detection.
+
+One of the main advantages of YOLO is the balance between speed and accuracy. This makes it highly suitable for sports tracking applications where objects move rapidly and real-time processing is required.
+
+In this thesis, YOLO models are used for detecting the padel ball, players, and court boundaries as part of the proposed tracking system.
+
+\subsection{YOLOv8}
+
+YOLOv8 is a modern object detection model developed by Ultralytics. It provides improved detection accuracy, faster inference speed, and easier deployment compared to earlier YOLO versions. YOLOv8 supports tasks such as object detection, segmentation, and pose estimation.
+
+One of the key improvements in YOLOv8 is the use of anchor-free detection, which predicts object locations directly without predefined anchor boxes. The model also uses a Cross Stage Partial (CSP) backbone for efficient feature extraction and multi-scale detection heads for detecting objects of different sizes.
+
+YOLOv8 is available in several variants including Nano (n), Small (s), Medium (m), Large (l), and Extra Large (x). Smaller models provide faster inference and lower resource consumption, while larger models offer higher accuracy.
+
+In this thesis, YOLOv8 Nano (YOLOv8n) was selected because of its lightweight architecture and suitability for edge deployment. The smaller model size allows faster inference on resource-constrained hardware such as Raspberry Pi devices and AI accelerators.
+
+Custom-trained YOLOv8 models were used for:
+\begin{itemize}
+    \item Ball detection
+    \item Player detection
+    \item Court detection
+\end{itemize}
+
+The models were trained on padel footage and later exported to the ONNX format for optimized deployment on edge devices.
+
+\subsubsection{Optical Flow}
+
+Optical Flow is a computer vision technique used to estimate motion between consecutive video frames. It works by analyzing changes in pixel positions over time to determine the direction and speed of movement. The resulting motion information is represented using motion vectors.
+
+Optical flow methods are generally divided into two categories: sparse optical flow and dense optical flow. Sparse optical flow tracks selected feature points within the image, while dense optical flow estimates motion for all pixels. Sparse methods are computationally lighter and more suitable for real-time applications.
+
+One of the most widely used sparse optical flow methods is the Lucas--Kanade algorithm. This method tracks feature points between frames by assuming that neighboring pixels move similarly over short time intervals. The algorithm is efficient and commonly used for object tracking and motion estimation.
+
+Optical flow is particularly useful in scenarios where object detectors temporarily fail due to motion blur, occlusion, or lighting variations. By tracking motion patterns between frames, the system can estimate object movement even when detections are missing.
+
+In this thesis, optical flow is used as a fallback tracking method when YOLO fails to detect the padel ball. It helps maintain continuous tracking during fast motion, blur, and short occlusions.
+
+\subsubsection{Kalman Filter}
+
+The Kalman Filter is a mathematical algorithm used for state estimation and trajectory prediction in dynamic systems. It estimates the current state of an object based on previous observations while reducing the effects of noise and uncertainty.
+
+The Kalman Filter operates in two main stages: prediction and update. In the prediction step, the algorithm estimates the next object position using the previous state and motion model. In the update step, the prediction is corrected using new measurements obtained from sensors or detectors.
+
+In object tracking applications, the Kalman Filter commonly assumes constant velocity motion. The state vector is represented as:
+
+\[
+[x, y, v_x, v_y]
+\]
+
+where \(x\) and \(y\) represent the object position, while \(v_x\) and \(v_y\) represent the velocity components along both axes.
+
+One of the main advantages of the Kalman Filter is its ability to smooth noisy trajectories and predict temporary missing positions. This makes it highly effective for tracking moving objects in video sequences.
+
+In this thesis, the Kalman Filter is used to smooth the detected ball trajectory and estimate ball positions when detections are temporarily lost. It also improves tracking stability during short occlusions and detection failures.
+
+\subsection{Edge AI}
+
+Edge AI refers to the deployment of Artificial Intelligence models directly on embedded or local devices instead of relying entirely on cloud servers. In edge computing, data processing and inference are performed close to the data source, reducing the need for continuous internet communication.
+
+Traditional cloud-based AI systems send data to remote servers for processing, which may introduce latency and require stable network connectivity. In contrast, edge AI enables real-time inference with lower latency and improved responsiveness.
+
+Edge AI systems provide several advantages including faster processing, lower bandwidth usage, improved privacy, offline operation, and reduced power consumption. These features make edge computing suitable for applications such as robotics, autonomous systems, smart cameras, and real-time monitoring systems.
+
+Real-time sports analytics systems particularly benefit from edge AI because video processing must occur with minimal delay. Performing inference directly on embedded hardware allows immediate feedback and continuous operation without relying on cloud infrastructure.
+
+In this thesis, edge AI is an important component of the proposed system because the padel tracking pipeline is designed for deployment on lightweight embedded hardware capable of real-time inference.
+
+\subsubsection{Raspberry Pi and Hailo Accelerator}
+
+The Raspberry Pi 5 is a low-cost single-board computer widely used in embedded systems and edge AI applications. It is based on ARM architecture and provides a balance between performance, portability, and power efficiency. Raspberry Pi devices are commonly used in robotics, IoT systems, and computer vision projects.
+
+Although Raspberry Pi devices support lightweight AI workloads, complex deep learning models may require additional acceleration hardware. For this reason, AI accelerators such as the Hailo-8 are used to improve neural network inference performance.
+
+The Hailo-8 is an AI accelerator designed specifically for efficient deep learning inference on edge devices. It provides high computational performance measured in TOPS (Tera Operations Per Second) while maintaining low power consumption. The accelerator is optimized for computer vision and deep learning workloads.
+
+The combination of Raspberry Pi 5 and Hailo-8 provides an efficient platform for real-time AI applications. This setup offers portability, low power usage, and accelerated inference capabilities, making it suitable for embedded sports analytics systems.
+
+In this thesis, the Raspberry Pi 5 and Hailo-8 combination represents the target deployment platform for the edge version of the proposed padel tracking system.
+
+\subsubsection{ONNX}
+
+ONNX, which stands for Open Neural Network Exchange, is an open standard used for representing deep learning models across different frameworks and hardware platforms. ONNX enables interoperability between frameworks such as PyTorch, TensorFlow, and ONNX Runtime.
+
+One of the main advantages of ONNX is model portability. Models trained in one framework can be exported and deployed efficiently on different devices without retraining. This simplifies deployment and improves hardware compatibility.
+
+In many applications, PyTorch models are converted into ONNX format to achieve faster inference and optimized execution on edge devices. ONNX Runtime further improves performance through hardware acceleration and inference optimizations.
+
+In this thesis, the trained YOLOv8 models were exported from PyTorch to ONNX format to support efficient deployment on embedded edge hardware such as Raspberry Pi and Hailo accelerators.
